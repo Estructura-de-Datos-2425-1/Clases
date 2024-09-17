@@ -55,5 +55,99 @@ public class Lista {
         }
         size++;
         return nodo;
-    }  
+    }
+    
+    public Nodo insertInIndex(Object element, int index){
+        Nodo nodo = new Nodo(element);
+        if (isEmpty()) {
+            setHead(nodo);
+            size++;
+        } else {
+            if (index < 0) {
+                System.out.println("Error invalid index");
+            } else if(index > size) {
+                System.out.println("Error index out of range");
+            } else if(index == 0) {
+                insertBegin(element);
+            } else if (index == size){
+                insertFinal(element);
+            } else {
+                Nodo pointer = getHead();
+                int aux = 0;
+                while (pointer.getNext() != null && aux < index -1) {
+                    pointer = pointer.getNext();
+                    aux++;
+                }
+                nodo.setNext(pointer.getNext());
+                pointer.setNext(nodo);
+                size++;
+            }
+        }
+        return nodo;
+    }
+    
+    public Nodo deleteBegin(){
+        if (isEmpty()) {
+            System.out.println("Error list is empty");
+            return null;
+        } else {
+            Nodo pointer = getHead();
+            setHead(pointer.getNext());
+            pointer.setNext(null);
+            return pointer;
+        }
+    }
+    
+    public Nodo deleteFinal() {
+        if (isEmpty()) {
+            System.out.println("Error list is empty");
+            return null;
+        } else {
+            Nodo pointer = getHead();
+            while (pointer.getNext().getNext() != null) {
+                pointer = pointer.getNext();
+            }
+            Nodo temp = pointer.getNext();
+            pointer.setNext(null);
+            size--;
+            return temp;
+        }
+    }
+    
+    public Nodo deleteInIndex(int index){
+        if (isEmpty()) {
+            System.out.println("Error list is empty");
+        } else {
+            if (index < 0) {
+                System.out.println("Error invalid index");
+            } else if(index > size) {
+                System.out.println("Error index out of range");
+            } else if(index == 0) {
+                return deleteBegin();
+            } else if (index == size-1){
+                return deleteFinal();
+            } else {
+                Nodo pointer = getHead();//3
+                int aux = 0;//2
+                while (pointer.getNext() != null && aux < index -1) {
+                    pointer = pointer.getNext();
+                    aux++;
+                }
+                Nodo pointerAux = pointer.getNext();
+                pointer.setNext(pointerAux.getNext());
+                pointerAux.setNext(null);
+                size--;
+                return pointerAux;
+            }
+        }
+        return null;
+    }
+    
+    public void print() {
+        Nodo pointer = getHead();
+        while (pointer != null) {
+            System.out.print("["+pointer.getElement()+"]");
+            pointer = pointer.getNext();
+        }
+    }
 }
