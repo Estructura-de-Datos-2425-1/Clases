@@ -4,7 +4,6 @@ public class Lista {
     
     private Nodo head;
     private int size;
-    
 
     public Lista() {
         this.head = null;
