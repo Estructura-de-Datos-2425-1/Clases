@@ -63,6 +63,7 @@ public class ListaArray implements ILista {
                 getArray()[position] = nodo;
                 setHead(position);
             }
+            size++;
             return nodo;
         }
     }
@@ -96,11 +97,23 @@ public class ListaArray implements ILista {
             } else {
                 int position = searchSpace();
                 if (position == -1) {
-                    
+                    NodoArray[] newArray = cloneArray();
+                    Integer pointer = getHead();
+                    while(newArray[pointer].getNext() != null) {
+                        pointer = newArray[pointer].getNext();
+                    }
+                    newArray[pointer].setNext(newArray.length -1);
+                    newArray[newArray.length - 1] = nodo;
+                    setArray(newArray);
                 } else {
-                    
+                    Integer pointer = getHead();
+                    while(getArray()[pointer].getNext() != null) {
+                        pointer = getArray()[pointer].getNext();
+                    }
+                    getArray()[pointer].setNext(position);
+                    getArray()[position] = nodo;
                 }
-                
+                size++;
             }
             return nodo;
         }
@@ -109,15 +122,37 @@ public class ListaArray implements ILista {
 
     @Override
     public NodoArray deleteBegin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (isEmpty()) {
+            System.out.println("The list is empty");
+            return null;
+        } else {
+            NodoArray pointer = getArray()[getHead()];
+            getArray()[getHead()] = null;
+            setHead(pointer.getNext());
+            pointer.setNext(null);
+            size--;
+            return pointer;
+        }
     }
 
     @Override
     public NodoArray deleteFinal() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (isEmpty()) {
+            System.out.println("The list is empty");
+            return null;
+        } else {
+            Integer pointer = getHead(); //2
+            while(getArray()[getArray()[pointer].getNext()].getNext() != null) {
+                pointer = getArray()[pointer].getNext();
+            }
+            Integer pointer2 = getArray()[pointer].getNext();
+            NodoArray nodoDeleted = getArray()[pointer2];
+            getArray()[pointer2] = null;
+            getArray()[pointer].setNext(null);
+            size--;
+            return nodoDeleted;
+        }
     }
-
-    
 
     @Override
     public boolean isEmpty() {
@@ -132,6 +167,20 @@ public class ListaArray implements ILista {
     @Override
     public NodoArray deleteInIndex(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public void print() {
+        Integer pointer = getHead();
+        while (pointer != null) {
+            System.out.println("["+getArray()[pointer].getElement()+"]");
+            pointer = getArray()[pointer].getNext();
+        }
+    }
+    
+    public void printSecuencial(){
+        for (int i = 0; i < getArray().length; i++) {
+            System.out.println("["+getArray()[i].getElement()+"]");
+        }
     }
     
 }
