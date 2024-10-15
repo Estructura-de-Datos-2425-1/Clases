@@ -30,7 +30,7 @@ public class Stack {
         this.size = size;
     }
     
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return getPeak() == null;
     }
     
@@ -56,6 +56,14 @@ public class Stack {
             pointer.setNext(null);
             size--;
             return pointer;
+        }
+    }
+    
+    public void print() {
+        Nodo pointer = getPeak();
+        while (pointer != null) {
+            System.out.println("["+pointer.getElement()+"]");
+            pointer = pointer.getNext();
         }
     }
 }
