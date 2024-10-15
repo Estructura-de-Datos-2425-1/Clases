@@ -94,6 +94,7 @@ public class Lista implements ILista {
             Nodo pointer = getHead();
             setHead(pointer.getNext());
             pointer.setNext(null);
+            size--;
             return pointer;
         }
     }
