@@ -82,6 +82,37 @@ public class Queue {
             System.out.print("["+pointer.getElement()+"]");
             pointer = pointer.getNext();
         }
+    } 
+    
+    public double average(){
+        if (isEmpty()) {
+            return 0;
+        } else {
+            double suma = 0;
+            Nodo pointer = getHead();
+            while(pointer != null) {
+                suma += (int) pointer.getElement();
+                pointer = pointer.getNext();
+            }
+            return suma / getSize();
+        }
+    }
+    
+    public void reverse() {
+        // 123456789 
+        // 5->4->3->2->1-> null
+        Nodo pointerCurrent = getHead(); //2
+        Nodo pointerPrevious = null;// 1
+        while (pointerCurrent != null) {
+            Nodo pointerNext = pointerCurrent.getNext();//3
+            pointerCurrent.setNext(pointerPrevious);
+            pointerPrevious = pointerCurrent;
+            pointerCurrent = pointerNext;
+        }
+        Nodo temp = getHead();
+        setHead(getTail());
+        setTail(temp);
+    
     }
             
 }

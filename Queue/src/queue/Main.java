@@ -12,6 +12,8 @@ public class Main {
         queue.print();
         System.out.println("");
         queue.dequeue();
+        System.out.println("Average:"+queue.average());
+        queue.reverse();
         queue.print();
     }
     
