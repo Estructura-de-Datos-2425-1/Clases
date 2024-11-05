@@ -62,6 +62,89 @@ public class BST {
         }
     }
     
+    public void deleteNodo(int element, Nodo pointer, Nodo pointerPrevious) {
+        if (isEmpty()) {
+            System.out.println("El arbol esta vacio");
+        } else if (element < pointer.getElement()) {
+            deleteNodo(element, pointer.getLeftSon(), pointer);
+        } else if (element > pointer.getElement()) {
+            deleteNodo(element, pointer.getRightSon(), pointer);
+        } else {
+            if (pointer.isLeaf()) {
+                // Cuando el nodo es una hoja
+                if (pointer == getRoot()) {
+                    // Cuando la unica hoja que hay es la raiz
+                    setRoot(null);
+                } else {
+                    if (element < pointerPrevious.getElement()) {
+                        pointerPrevious.setLeftSon(null);
+                    } else {
+                        pointerPrevious.setRightSon(null);
+                    }
+                }
+            } else if (pointer.hasOnlyLeftSon()) {
+                // Cuando el nodo a eliminar solo tiene un hijo izq
+                if (pointer == getRoot()) {
+                    setRoot(pointer.getLeftSon());
+                } else {
+                    if (element < pointerPrevious.getElement()) {
+                        pointerPrevious.setLeftSon(pointer.getLeftSon());
+                    } else {
+                        pointerPrevious.setRightSon(pointer.getLeftSon());
+                    } 
+                }
+            } else if (pointer.hasOnlyRightSon()) {
+                // Cuando el nodo a eliminar solo tiene un hijo derecho
+                if (pointer == getRoot()) {
+                    setRoot(pointer.getRightSon());
+                } else {
+                    if (element < pointerPrevious.getElement()) {
+                        pointerPrevious.setLeftSon(pointer.getRightSon());
+                    } else {
+                        pointerPrevious.setRightSon(pointer.getRightSon());
+                    } 
+                }
+            } else {
+                // Cuando el nodo a eliminar tiene dos hijos
+                boolean hasRightSons = pointer.getLeftSon().hasRightSon();
+                Nodo temp = (hasRightSons) ? searchNodoToReplace(pointer.getLeftSon()) : pointer.getLeftSon();
+                if (pointer == getRoot()) {
+                    Nodo tempRoot = getRoot();
+                    temp.setLeftSon(tempRoot.getLeftSon());
+                    temp.setRightSon(tempRoot.getRightSon());
+                    setRoot(temp);
+                    tempRoot.setLeftSon(null);
+                    tempRoot.setRightSon(null);
+                } else {
+                    if (hasRightSons){
+                        temp.setLeftSon(pointer.getLeftSon());
+                    }
+                    temp.setRightSon(pointer.getRightSon());
+                    if (element < pointerPrevious.getElement()) {
+                        pointerPrevious.setLeftSon(temp);
+                    } else {
+                        pointerPrevious.setRightSon(temp);
+                    }
+                }
+            } 
+        }
+        
+    }
+    
+    public Nodo searchNodoToReplace(Nodo nodo) {
+        Nodo previous = nodo;
+        while (nodo.getRightSon() != null) {
+            previous = nodo;
+            nodo = nodo.getRightSon();
+        }
+        previous.setRightSon(null);
+        if (nodo.getLeftSon() != null) {
+            previous.setRightSon(nodo.getLeftSon());
+            nodo.setLeftSon(null);
+        }
+        return nodo;
+    }
+    
     public boolean isEmpty() {
         return getRoot() == null;
     }

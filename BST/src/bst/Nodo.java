@@ -45,4 +45,12 @@ public class Nodo {
     public boolean hasRightSon(){
         return rightSon != null;
     }
+    
+    public boolean hasOnlyLeftSon() {
+        return leftSon != null && rightSon == null;
+    }
+    
+    public boolean hasOnlyRightSon() {
+        return leftSon == null && rightSon != null;
+    }
 }

@@ -26,7 +26,9 @@ public class Main {
         tree.insert(120, tree.getRoot());
         tree.insert(110, tree.getRoot());
         tree.insert(130, tree.getRoot());
-        tree.inOrden(tree.getRoot());
+        tree.insert(93, tree.getRoot());
+        tree.deleteNodo(70, tree.getRoot(), null);
+        tree.preOrden(tree.getRoot());
     }
     
 }
